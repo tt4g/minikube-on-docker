@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  minikube-dood:
+    image: minikube-dood:20.10.6
+    container_name: minikube-dood
+    build:
+      context: ./docker/minikube-dood
+      dockerfile: Dockerfile
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - minikube-on-docker-network
+    env_file: ./docker/minikube-dood/.env
+    tty: true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+
+networks:
+  minikube-on-docker-network:
+    name: minikube-on-docker-network
+    driver: bridge
